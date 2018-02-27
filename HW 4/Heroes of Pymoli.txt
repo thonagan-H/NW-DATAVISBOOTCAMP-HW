@@ -1,0 +1,4 @@
+Three observable trends:
+•	The item “Final Critic” has been the most popular item in terms of number of times bought and its overall purchase value.
+•	There are more male players in the game than there are any other genders, and these players are more likely to make payments for items with games, based on the total amount of money spent by gender.
+•	The majority of players of the game are between the ages of 15 and 30
