@@ -1,0 +1,7 @@
+Regarding the bubble plot:
+  I was able to accurately generate the bubbble plot however I was unable to change the legend color to match the bubbble color.
+  I also believe that bubble plots are not the best way to represent the data. The data appears too clustered and is difficult to analyze
+  given the overlapping colors. I feel that using a bar chart can provide the same result with better visualization.
+ 
+ Regarding the pie charts:
+  I was able to generate the chart, but was unable to combine two wedges into one single wedge.
