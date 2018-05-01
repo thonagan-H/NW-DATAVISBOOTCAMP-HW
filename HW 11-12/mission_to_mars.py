@@ -1,14 +1,21 @@
 # Dependencies# Dependencies
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
-import pandas as pd
 from selenium import webdriver
 import time
+from flask import Flask, render_template, jsonify, redirect
+import pymongo
+
 
 def scraper():
+    # Initialize PyMongo to work with MongoDBs
+    conn = 'mongodb://localhost:27017'
+    client = pymongo.MongoClient(conn)
+    
+    #Create Scraper
     browsers = webdriver.Chrome('chromedriver.exe')
     url_mars_press = 
-"https://mars.nasa.gov/news/page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest"
+    "https://mars.nasa.gov/news/page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest"
     browsers.get(url_mars_press)
     htmls = browsers.page_source
     soups = bs(htmls, "html.parser")
@@ -57,7 +64,7 @@ def scraper():
     img_site = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     brow_images.visit(img_site)
 
-    list_of_dict = []
+    list_of_img_dict = []
     tags = brow_images.find_by_tag('h3')
     for i in range(len(tags)):
         img_dict = {}
@@ -69,8 +76,10 @@ def scraper():
                     'title':img_title.text,
                     'img_url':link_to_click['href']
         }
-        list_of_dict.append(img_dict)
+        list_of_img_dict.append(img_dict)
         brow_images.quit()
         brow_images = init_browser()
         brow_images.visit(img_site)
         time.sleep(10)
+    
+    return article_title,para_text,mars_weather,list_of_img_dict
