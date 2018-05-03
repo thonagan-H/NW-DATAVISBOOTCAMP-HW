@@ -77,9 +77,8 @@ def scraper():
                     'img_url':link_to_click['href']
         }
         list_of_img_dict.append(img_dict)
-        brow_images.quit()
-        brow_images = init_browser()
-        brow_images.visit(img_site)
+        brow_images.back()
         time.sleep(10)
+        
     
     return article_title,para_text,mars_weather,list_of_img_dict
