@@ -64,21 +64,22 @@ def scraper():
     img_site = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     brow_images.visit(img_site)
 
-    list_of_img_dict = []
+    #list_of_img_dict = []
+    tag_list = []
     tags = brow_images.find_by_tag('h3')
-    for i in range(len(tags)):
-        img_dict = {}
-        brow_images.click_link_by_partial_text(tags[i].text)
-        link_to_click = brow_images.find_link_by_text('Sample')
+    for i in tags:
+        tag_list.append(i.text)
+        
+    for i in range(len(tag_list)):
+        brow_images.click_link_by_partial_text(tag_list[i])
+        link_to_get = brow_images.find_link_by_text('Sample')
         img_title = brow_images.find_by_tag('h2')
-        brow_images.click_link_by_text('Sample')
         img_dict = {
-                    'title':img_title.text,
-                    'img_url':link_to_click['href']
+                     'title':img_title.text,
+                     'img_url':link_to_get['href']
         }
-        list_of_img_dict.append(img_dict)
+        list_of_img_dict_2.append(img_dict)
         brow_images.back()
-        time.sleep(10)
         
     
     return article_title,para_text,mars_weather,list_of_img_dict
