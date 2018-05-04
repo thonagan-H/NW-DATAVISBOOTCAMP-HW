@@ -40,10 +40,7 @@ client = pymongo.MongoClient(conn)
 
 # Define database and collection
 
-db_imgs = client.mars_imgs_db
-
-db_tweets = client.mars_tweets_db
-db_news = client.news_db
+db_mars = client.mars_db
 
 collection_imgs = db_imgs.articles
 
