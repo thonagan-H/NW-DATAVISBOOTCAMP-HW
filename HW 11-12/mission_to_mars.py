@@ -45,11 +45,11 @@ def scraper():
     headings_res = soups.find_all('div', class_='content_title')
     para_res = soups.find_all('div', class_='rollover_description_inner')
     for i in range(len(headings_res)):
-        title_text = {
+        news_title_text = {
             'title':headings_res[i].text,
             'text':para_res[i].text
         }
-        collection_news.insert_one(title_text)
+        collection_news.insert_one(news_title_text)
 
     #USE SPLINTER TO GET IMG URL
     def init_browser():
@@ -113,4 +113,4 @@ def scraper():
         brow_images.back()
         
     
-    return article_title,para_text,mars_weather,list_of_img_dict
+    return news_title_text,pic_of_day,mars_tweets,img_dict
