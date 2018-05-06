@@ -9,7 +9,7 @@ import pymongo
 
 
 
-def scraper():
+def scrape():
     # Establish Mongo Connections:
     conn = 'mongodb://localhost:27017'
     client = pymongo.MongoClient(conn)
