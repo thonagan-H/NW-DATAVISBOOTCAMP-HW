@@ -33,13 +33,16 @@ def metadata(sample):
         if i['SAMPLEID'] == int(sample.split('_')[1]):
             return jsonify(i)
 
-# @app.route("/wfreq/<sample>")
-# def metadata(sample):
-#     import df_met_csv_2
-#     sampleid = sample.strip('_')[1]
-#     wfreq = df_met_csv_2.loc[sampleid]['WFREQ']
-#     return ('The weekly washing frequency is ' + wfreq)
+@app.route("/wfreq/<sample>")
+def wfreq(sample):
+    import df_met_csv_2
+    sampleid = sample.strip('_')[1]
+    wfreq = df_met_csv_2.loc[sampleid]['WFREQ']
+    return ('The weekly washing frequency is ' + wfreq)
 
+@app.route("/samples/<sample>")
+def metadata(sample):
+    
 
 if __name__ == "__main__":
     app.run()
