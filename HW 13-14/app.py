@@ -26,12 +26,12 @@ def otu():
     return jsonify(otu_descr)
 
 
-# @app.route("/metadata/<sample>")
-# def metadata(sample):
-#     for i in metadata_samples:
-#             if i['SAMPLEID'] == sample:
-#                         val = i
-#     return jsonify(val)
+@app.route("/metadata/<sample>")
+def metadata(sample):
+    # return jsonify(metadata_samples)
+    for i in metadata_samples:
+        if i['SAMPLEID'] == int(sample.split('_')[1]):
+            return jsonify(i)
 
 # @app.route("/wfreq/<sample>")
 # def metadata(sample):
