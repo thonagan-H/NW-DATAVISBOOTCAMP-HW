@@ -23,3 +23,7 @@ for i in list_of_dicts_metadata:
                        or('ETHNICITY' in k) or ('GENDER' in k)
                        or('LOCATION' in k) or ('SAMPLEID' in k)} 
     metadata_samples.append(filtered_dict)
+
+for i in metadata_samples:
+    i['AGE'] = i['AGE'].item()
+    i['SAMPLEID'] = i['SAMPLEID'].item()
