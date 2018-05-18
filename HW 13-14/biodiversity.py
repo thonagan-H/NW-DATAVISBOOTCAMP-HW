@@ -27,3 +27,21 @@ for i in list_of_dicts_metadata:
 for i in metadata_samples:
     i['AGE'] = i['AGE'].item()
     i['SAMPLEID'] = i['SAMPLEID'].item()
+    
+
+#LIST OF ALL BB_XXX WITH VALUES GREATER THAN 0
+list_of_dict = []
+cols = df_samples.columns.tolist()
+
+for i in cols:
+    otu_id_list = []
+
+    for j in range(len(df_samples[i].values)):
+        
+            if  df_samples[i].values[j] > 0:      
+                
+                otu_id_list.append(df_samples[i].index[j])
+                otu_dict = {
+                    i : otu_id_list
+                }
+    list_of_dict.append(otu_dict)
