@@ -28,7 +28,6 @@ def otu():
 
 @app.route("/metadata/<sample>")
 def metadata(sample):
-    # return jsonify(metadata_samples)
     for i in metadata_samples:
             if i['SAMPLEID'] == int(sample.split('_')[1]):
                         return jsonify(i)
@@ -41,7 +40,6 @@ def wfreq(sample):
 
 @app.route("/samples/<sample>")
 def samples(sample):
-    # return jsonify(metadata_samples)
     for i in sample_vals_list:
         for j in i.keys():
             if j == sample:
