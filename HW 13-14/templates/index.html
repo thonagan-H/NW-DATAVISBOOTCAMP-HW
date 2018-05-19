@@ -11,6 +11,7 @@
     "This is just filler text"
     <select id="selDataset" onchange="optionChanged(this.value)"></select>
     <div id="pie"></div>
+    <div id = 'bubble'></div>
     <script>
             var url = "/names"
             Plotly.d3.json(url,function(error,response){
@@ -29,14 +30,38 @@
         function optionChanged(route) {
                 console.log(route);
                 Plotly.d3.json('/samples'+`/${route}`,function(error,response){
-                    var trace = {
+                    var trace_pie = {
                     labels : response.otu_ids,
                     values : response.sample_values,
                     type : 'pie'
                     };
-                    var data = [trace];
-                    var PIE = document.getElementById("pie");
-                    Plotly.newPlot('pie',data)
+                    var data_pie = [trace_pie];
+                    Plotly.newPlot('pie',data_pie)
+                    
+                    var bubble_size = []
+                    var bubble_color = ['green','red','blue','yellow','pink','brown','orange','purple','black','rgb(255, 65, 54)']
+                    var bubble_color_2 = []
+                    for(i=0;i<10;i++){
+                        bubble_size.push(response.sample_values[i])
+                        if(bubble_color_2.length<=bubble_size.length){
+                            bubble_color_2.push(bubble_color[i])
+                    }
+                }
+                    console.log(bubble_color_2)
+                    var trace_bubble = {
+                    type: "scatter",
+                    mode: "markers",
+                    name: "Belly Button",
+                    x: response.otu_ids,
+                    y: response.sample_values,
+                    marker:{color:bubble_color_2,size:bubble_size}
+                    };
+
+                    var data_bubble = [trace_bubble];
+                    var layout_bubble = {
+                    title: "belly button"
+                    };
+                    Plotly.newPlot('bubble',data_bubble,layout_bubble)
             });
         }
     </script>
