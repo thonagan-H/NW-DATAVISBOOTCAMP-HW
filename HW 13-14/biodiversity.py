@@ -29,28 +29,4 @@ for i in metadata_samples:
     i['SAMPLEID'] = i['SAMPLEID'].item()
     
 
-#Sample_Values list with Otu_Ids and corresponding values
-cols = df_samples.columns.tolist()
-sample_vals_list = []
 
-for i in cols:
-    otu_id_list = []
-    otu_id_vals = []
-    
-    for j in range(len(df_samples[i].values)):
-        
-            if  df_samples[i].values[j] > 0:
-                               
-                otu_id_vals.append(df_samples[i].values[j])
-                otu_id_list.append(df_samples[i].index[j] - 1)
-                otu_dict = {
-                    i : otu_id_list,
-                    'vals':otu_id_vals                    
-                }
-                temp_df = pd.DataFrame(data = otu_dict)
-                temp_df = temp_df.sort_values(by=['vals'],ascending = False)
-                otu_final = {
-                    'otu_ids':temp_df[i].tolist(),
-                    'sample_values':temp_df['vals'].tolist()
-                }
-    sample_vals_list.append(otu_final)
