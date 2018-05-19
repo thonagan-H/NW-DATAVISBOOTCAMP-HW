@@ -7,10 +7,10 @@ from flask import (
     redirect)
 
 from biodiversity import *
+from samples_data import sample_vals_list
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
-
 
 # create route that renders index.html template
 @app.route("/")
@@ -24,7 +24,6 @@ def names():
 @app.route("/otu")
 def otu():
     return jsonify(otu_descr)
-
 
 @app.route("/metadata/<sample>")
 def metadata(sample):
@@ -44,7 +43,6 @@ def samples(sample):
         for j in i.keys():
             if j == sample:
                 return jsonify(i.get(j))
-
 
 if __name__ == "__main__":
     app.run()
