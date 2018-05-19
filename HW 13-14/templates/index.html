@@ -43,7 +43,7 @@
                     var bubble_color_2 = []
                     for(i=0;i<10;i++){
                         bubble_size.push(response.sample_values[i])
-                        if(bubble_color_2.length<=bubble_size.length){
+                        if(bubble_color_2.length<response.otu_ids.length){
                             bubble_color_2.push(bubble_color[i])
                     }
                 }
