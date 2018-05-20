@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bellybutton Diversity </title>
+    <title>Bigfoot Sightings </title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
@@ -26,44 +26,53 @@
                     dropdown.appendChild(elements);
             };
         });
-    
+        
         function optionChanged(route) {
-                console.log(route);
-                Plotly.d3.json('/samples'+`/${route}`,function(error,response){
+            Plotly.d3.json('/samples'+`/${route}`,function(error,response){
+                Plotly.d3.json('/otu',function(error,response_otu){
+                    var hoverdata = [] 
+                    for (i=0;i<response.otu_ids.length;i++){
+                        hoverdata.push(response_otu[response.otu_ids[i]])
+                    }
+                    // Need to get Hoverinfo
+                    console.log(hoverdata)
                     var trace_pie = {
                     labels : response.otu_ids,
                     values : response.sample_values,
-                    type : 'pie'
+                    type : 'pie'    
                     };
                     var data_pie = [trace_pie];
                     Plotly.newPlot('pie',data_pie)
-                    
                     var bubble_size = []
                     var bubble_color = ['green','red','blue','yellow','pink','brown','orange','purple','black','rgb(255, 65, 54)']
                     var bubble_color_2 = []
+
                     for(i=0;i<10;i++){
-                        bubble_size.push(response.sample_values[i])
-                        while(bubble_color_2.length<response.otu_ids.length){
-                            bubble_color_2.push(bubble_color[i])
+                        if(bubble_color_2.length<response.otu_ids.length){
+                            bubble_size.push(response.sample_values[i])
+                            bubble_color_2.push(bubble_color[i])   
                     }
                 }
-                    console.log(bubble_color_2)
+
                     var trace_bubble = {
                     type: "scatter",
                     mode: "markers",
-                    name: "Belly Button",
-                    x: response.otu_ids,
+                    name: "Belly Button Sample Values",
+                    x: response.otu_ids,    
                     y: response.sample_values,
                     marker:{color:bubble_color_2,size:bubble_size}
                     };
 
                     var data_bubble = [trace_bubble];
                     var layout_bubble = {
-                    title: "belly button"
+                    title: "Belly Button Sample Values",
+                    xaxis:{title:'Sample Values',autorange:true},
+                    yaxis:{title:'OTU IDs',range:[0,bubble_size[0]+100]}
                     };
                     Plotly.newPlot('bubble',data_bubble,layout_bubble)
             });
-        }
+    });
+}
     </script>
     
     
