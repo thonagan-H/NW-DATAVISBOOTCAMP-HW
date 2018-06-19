@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Citi Bike</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css">
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+  <!-- The div that holds our map -->
+  <div id="map-id"></div>
+  <!-- D3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+ 
+  <!-- Our JavaScript -->
+  <script src="js/all_month.geojson"></script>
+  <script src="tectonicplates-master/GeoJSON/PB2002_boundaries.js"></script>
+
+  <script>
+    function createMap() {
+        
+        // create the tile layer - GrayScale
+        var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGhvbmFnYW4taCIsImEiOiJjamhiN3ZoMDkwbWVtMzZzMDFxMm9iam13In0.ixvQvlhiz3Ov_WvURTDVMA");              
+       
+        // Create the map object with options
+        var map = L.map("map-id", {
+          center: [0,0],
+          zoom: 1.5,
+          layers: [lightmap]
+        });
+        
+        // FUNCTION FOR COLOR GRADIENT BASED ON MAGNITUDE
+        function getColor(d) {
+            return  d > 6   ?'#BF001D' :
+                    d > 5.5 ?'#C30303' :
+                    d > 5   ?'#C82507' :
+                    d > 4.5 ?'#CC470B' :
+                    d > 4   ?'#D1690F' :
+                    d > 3.5 ?'#D58C13' :
+                    d > 3   ?'#DAAF18' :
+                    d > 2.5 ?'#DFD11C' :
+                    d > 2   ?'#D2E321' :
+                    d > 1.5 ?'#B9E826' :
+                    d > 1   ?'#9FEC2B' :
+                    d > 0.5 ?'#86F131' :
+                    d > 0   ?'#6EF536' :
+                    d > -0.44   ?'#55FA3C' :
+                                '#41FF45';
+            }
+        
+        // CREATE MARKERS OPTIONS 
+        function geojsonMarkerOptions(element) {
+            return{ radius: (element.properties.mag)*1.5,
+            fillColor: getColor(element.properties.mag),
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+            };
+        };
+        
+        //  CREATE MAP WITH ALL THE DATA
+        L.geoJSON(geo_data, {
+            pointToLayer: function bumps(element) {
+              var lat = element.geometry.coordinates[1]; 
+              var lng = element.geometry.coordinates[0];
+              return L.circleMarker([lat,lng], geojsonMarkerOptions(element)).bindTooltip("Title: "+element.properties.title)
+            } 
+        })
+        .addTo(map);
+        
+        // Tectonic Boundaries 
+        L.geoJSON(boundaries).addTo(map)     
+        }
+        createMap();      
+  </script>
+
+</body>
+
+</html>
